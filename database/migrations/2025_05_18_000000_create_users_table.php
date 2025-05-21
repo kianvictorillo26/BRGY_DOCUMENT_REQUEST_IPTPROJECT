@@ -28,7 +28,7 @@ return new class extends Migration
         $users = [
             [
                 'first_name' => 'Admin',
-                'last_name' => 'Admin',
+                'last_name' => 'Admin++++',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => 1,
