@@ -7,75 +7,69 @@ use App\Models\Citizen;
 
 class CitizenController extends Controller
 {
-     public function getStudents(){
-        $students = Student::with('course', 'yearLevel', 'section')->get();
+     public function getCitizens(){
+        $citizens = Citizen::get();
 
-        return response()->json(['students' => $students]);
+        return response()->json(['citizens' => $citizens]);
     }  
 
-    public function addStudent(Request $request){
+    public function addCitizen(Request $request){
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'id_number' => ['nullable', 'string', 'max:255', 'unique:students'],
-            'course_id' => ['required', 'exists:courses,id'],
-            'year_level_id' => ['required', 'exists:year_levels,id'],
-            'section_id' => ['required', 'exists:sections,id'],
+            'id_number' => ['nullable', 'string', 'max:255', 'unique:citizens'],
+            'document_id' => ['nullable'],
+            'request_id' => ['nullable'],
+
+
         ]);
 
-        $student = Student::create([
+        $citizen = Citizen::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
             'id_number' => $request->id_number,
-            'course_id' => $request->course_id,
-            'year_level_id' => $request->year_level_id,
-            'section_id' => $request->section_id,
+            'document_id' => $request->document_id,
+            'request_id' => $request->request_id,
         ]);
 
-        return response()->json(['message' => 'Student added successfully', 'student' => $student]);
+        return response()->json(['message' => 'Citizen added successfully', 'citizen' => $citizen]);
     }
 
-    public function editStudent(Request $request, $id){
+    public function editCitizen(Request $request, $id){
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'id_number' => ['nullable', 'string', 'max:255', 'unique:students,id_number,' . $id],
-            'course_id' => ['required', 'exists:courses,id'],
-            'year_level_id' => ['required', 'exists:year_levels,id'],
-            'section_id' => ['required', 'exists:sections,id'],
+            
         ]);
 
-        $student = Student::find($id);
+        $citizen = Citizen::find($id);
 
-        if(!$student){
-            return response()->json(['message' => 'Student not found'], 404);
+        if(!$citizen){
+            return response()->json(['message' => 'Citizen not found'], 404);
         }
 
-        $student->update([
+        $citizen->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
-            'id_number' => $request->id_number,
-            'course_id' => $request->course_id,
-            'year_level_id' => $request->year_level_id,
-            'section_id' => $request->section_id,
+            
         ]);
 
-        return response()->json(['message' => 'Student updated successfully', 'student' => $student ]);
+        return response()->json(['message' => 'Citizen updated successfully', 'citizen' => $citizen ]);
     }   
 
-    public function deleteStudent($id){
-        $student = Student::find($id);
+    public function deleteCitizen($id){
+        $citizen = Citizen::find($id);
 
-        if(!$student){
-            return response()->json(['message' => 'Student not found'], 404);
+        if(!$citizen){
+            return response()->json(['message' => 'Citizen not found'], 404);
         }
 
-        $student->delete();
+        $citizen->delete();
 
-        return response()->json(['message' => 'Student deleted successfully']);
+        return response()->json(['message' => 'Citizen deleted successfully']);
     }
 }

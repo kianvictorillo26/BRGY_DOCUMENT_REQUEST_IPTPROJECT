@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitizenController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,17 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-citizens', [CitizenController::class, 'getCitizens']);
     Route::post('/add-citizen', [CitizenController::class, 'addCitizen']);
     Route::put('/edit-citizen/{id}', [CitizenController::class, 'editCitizen']);
-    Route::delete('/delete-citizen/{id}', [CitizenControllerr::class, 'deleteCitizen']);
+    Route::delete('/delete-citizen/{id}', [CitizenController::class, 'deleteCitizen']);
+
+    Route::get('/get-documents', [DocumentController::class, 'getDocuments']);
+    Route::post('/add-document', [DocumentController::class, 'addDocument']);
+    Route::put('/edit-document/{id}', [DocumentController::class, 'editDocument']);
+    Route::delete('/delete-document/{id}', [DocumentController::class, 'deleteDocument']);
+
+    Route::get('/get-requests', [DocumentRequestController::class, 'getRequests']);
+    Route::post('/add-request', [DocumentRequestController::class, 'addRequest']);
+    Route::put('/edit-request/{id}', [DocumentRequestController::class, 'editRequest']);
+    Route::delete('/delete-request/{id}', [DocumentRequestController::class, 'deleteRequest']);
     
     Route::post('/logout', [CitizenController::class, 'logout']);
 });

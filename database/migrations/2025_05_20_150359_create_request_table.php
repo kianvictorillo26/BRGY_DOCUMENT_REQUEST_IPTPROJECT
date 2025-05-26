@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\request;
+use App\Models\DocumentRequest;
 
 return new class extends Migration
 {
@@ -12,27 +12,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('request', function (Blueprint $table) {
+        Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
 
-        $request = [
+        $requests = [
             ['name' => 'Dcoument Name'],
             ['name' => 'Document Description'],
         ];  
 
-        foreach($request as $request){
-            Course::create($request);
+        foreach($requests as $request){
+           DocumentRequest::create($request);
         }
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+     public function down()
     {
-        Schema::dropIfExists('request');
+        Schema::dropIfExists('document_requests');
     }
 };
